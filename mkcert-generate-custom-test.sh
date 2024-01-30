@@ -4,13 +4,16 @@ local_ip=$(ip addr show | grep -oP '(?<=inet )(\d+\.\d+\.\d+\.\d+)' | grep -v '1
 echo "Local IP Address: $local_ip"
 read -p "Enter the project certificates path: " certificate_path
 
-# undo everything
+# removing CA default from mkcert from trust store
 mkcert -uninstall
-mkcert -install
+
 # going to key files of root
 cd $(mkcert -CAROOT)
 sudo chown $(whoami) rootCA-key.pem 
 sudo chown $(whoami) rootCA.pem
+sudo rm rootCA-key.pem rootCA.pem
+
+# cd "$certificate_path"
 
 # creating the CA certificate details
 cat <<EOF > openssl-custom.conf
@@ -31,7 +34,7 @@ emailAddress = smazoomder@gmail.com
 [ v3_req ]
 basicConstraints = CA:TRUE
 EOF
-# modifying the certificate detials
+openssl genpkey -algorithm RSA -out rootCA-key.pem
 openssl req -x509 -new -key rootCA-key.pem -out rootCA.pem -days 3650 -config openssl-custom.conf
 rm -r openssl-custom.conf
 
