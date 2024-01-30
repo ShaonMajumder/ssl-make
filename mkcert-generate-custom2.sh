@@ -71,8 +71,8 @@ prompt = no
 C = BD
 ST = Dhaka
 L = Gulshan
-O = ROBIST
-OU = Software
+O = YourCompany
+OU = YourDepartment
 CN = localhost
 
 [v3_req]
