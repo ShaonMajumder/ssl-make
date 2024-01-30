@@ -88,10 +88,11 @@ openssl req -new -key private.key -out server.csr -config csr_config.conf
 openssl x509 -req -in server.csr -CA "rootCA.pem" -CAkey "rootCA-key.pem" -CAcreateserial -out server.crt -days 3650 -extensions v3_req -extfile csr_config.conf
 
 
+mkcert -uninstall
+mkcert -install -cert-file rootCA.pem -key-file rootCA-key.pem
 
 
-
-# # intalling with custom CA
+# intalling with custom CA
 # mkcert -install -cert-file rootCA.pem -key-file rootCA-key.pem
 
 # rm -r "$certificate_path"
