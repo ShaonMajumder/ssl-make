@@ -4,13 +4,10 @@ local_ip=$(ip addr show | grep -oP '(?<=inet )(\d+\.\d+\.\d+\.\d+)' | grep -v '1
 echo "Local IP Address: $local_ip"
 read -p "Enter the project certificates path: " certificate_path
 
-# undo everything
-mkcert -uninstall
-mkcert -install
-# going to key files of root
-cd $(mkcert -CAROOT)
-sudo chown $(whoami) rootCA-key.pem 
-sudo chown $(whoami) rootCA.pem
+### generating certificate
+rm -r "$certificate_path"
+mkdir "$certificate_path"
+cd "$certificate_path"
 
 # creating the CA certificate details
 cat <<EOF > openssl-custom.conf
@@ -32,15 +29,12 @@ emailAddress = smazoomder@gmail.com
 basicConstraints = CA:TRUE
 EOF
 # modifying the certificate detials
-openssl req -x509 -new -key rootCA-key.pem -out rootCA.pem -days 3650 -config openssl-custom.conf
+openssl genpkey -algorithm RSA -out private.key
+openssl req -x509 -new -key private.key -out CA.pem -days 3650 -config openssl-custom.conf
 rm -r openssl-custom.conf
 
 
 
-### generating certificate
-rm -r "$certificate_path"
-mkdir "$certificate_path"
-cd "$certificate_path"
 
 # Generate a new private key
 openssl genpkey -algorithm RSA -out private.key
@@ -65,6 +59,20 @@ basicConstraints = CA:FALSE
 subjectAltName = DNS:localhost,IP:$local_ip
 EOF
 
+
+cd $(mkcert -CAROOT)
+sudo chown $(whoami) rootCA-key.pem 
+sudo chown $(whoami) rootCA.pem
+sudo rm rootCA-key.pem rootCA.pem
+
+# again uninstalling
+mkcert -uninstall
+
+# intalling with custom info
+mkcert -install -cert-file "CA.pem" -key-file "CA-key.pem"
+cd "$certificate_path"
+
+
 # Create a CSR with the subjectAltName extension
 openssl req -new -key private.key -out server.csr -config csr_config.conf
 
@@ -76,6 +84,8 @@ openssl x509 -in server.crt -text -noout
 
 # Concatenate private key and certificate into a new file
 cat private.key server.crt > server_combined.pem
+
+
 
 # Cleanup
 rm server.csr csr_config.conf

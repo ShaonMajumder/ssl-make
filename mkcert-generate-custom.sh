@@ -11,6 +11,9 @@ mkcert -install
 cd $(mkcert -CAROOT)
 sudo chown $(whoami) rootCA-key.pem 
 sudo chown $(whoami) rootCA.pem
+sudo rm rootCA-key.pem rootCA.pem
+
+openssl genpkey -algorithm RSA -out rootCA-key.pem
 
 # creating the CA certificate details
 cat <<EOF > openssl-custom.conf
