@@ -19,15 +19,15 @@ if [ -z "$filename" ]; then
 fi
 
 if [ -z "$backend_path" ]; then
-    backend_path="/home/shaon/Projects/smart-office/backend/public"
+    backend_path="/var/www/html/smart-office/backend/public"
 fi
 
 if [ -z "$crt_path" ]; then
-    crt_path="/home/shaon/Projects/smart-office/test/server.crt"
+    crt_path="/var/www/html/smart-office/test/server.crt"
 fi
 
 if [ -z "$key_path" ]; then
-    key_path="/home/shaon/Projects/smart-office/test/private.key"
+    key_path="/var/www/html/smart-office/test/private.key"
 fi
 
 
@@ -68,5 +68,6 @@ EOF
 # echo $apache_dir/*
 echo $filename
 sudo a2enmod ssl
+sudo a2dissite *
 sudo a2ensite $filename
 sudo systemctl restart apache2
