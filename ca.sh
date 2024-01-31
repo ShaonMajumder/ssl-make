@@ -1,6 +1,18 @@
 #!/bin/bash
-cadir="ca"
-echo "ca path - $cadir\n"
+
+cadir="default_ca_directory"
+
+# Parse command line options
+while [[ "$#" -gt 0 ]]; do
+    case $1 in
+        -cadir|--cadir) cadir="$2"; shift ;;
+        *) echo "Unknown parameter passed: $1"; exit 1 ;;
+    esac
+    shift
+done
+
+# Now you can use the $cadir variable in your script
+echo "CA directory: $cadir\n"
 mkdir -p $cadir
 cd $cadir
 
@@ -17,7 +29,7 @@ prompt = no
 C  = BD
 ST = Dhaka
 L  = Gulshan
-O  = BYSL Kalchandpur
+O  = BYSL Dev
 OU = Fintech
 CN = localhost
 emailAddress = smazoomder@gmail.com
