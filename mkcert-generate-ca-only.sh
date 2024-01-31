@@ -1,7 +1,7 @@
 #!/bin/bash
 # input example - /var/www/html/your-project/test
 ca_path="ca"
-output=$(./ca.sh -cadir "$ca_path") 
+output=$(./generate-ca.sh -cadir "$ca_path") 
 echo $output
 
 read -p "Enter the project certificates path: " certificate_path
