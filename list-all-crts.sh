@@ -2,7 +2,7 @@
 
 # Function to display script usage
 usage() {
-    echo "Usage: $0 [-lc|--list-certificates [<directory>]] [-mi|--mkcert-install] [-mu|--mkcert-uninstall] [-gca|--generate-ca] [-ica|--install-ca] [-gcrt|--generate-certificate] [-cuc|--check-used-certificate] [-cvh|--create-virtual-host] [--clear]"
+    echo "Usage: $0 [-lc|--list-certificates [<directory>]] [-mi|--mkcert-install] [-mu|--mkcert-uninstall] [-gca|--generate-ca] [-ica|--install-ca] [-gcrt|--generate-certificate] [-cuc|--check-used-certificate] [-cvh|--create-virtual-host] [-v|--view [<directory>]] [--clear]"
     exit 1
 }
 
@@ -240,6 +240,17 @@ EOF
     openssl x509 -req -in server.csr -CA "$ca_cert" -CAkey "$ca_key" -CAcreateserial -out server.crt -days 3650 -extensions v3_req -extfile crt.conf
 }
 
+view_certificate() {
+    local cert_file="$1"
+
+    if [ ! -e "$cert_file" ]; then
+        echo "Error: Certificate file does not exist at: $cert_file"
+        return 1
+    fi
+
+    openssl x509 -in "$cert_file" -text -noout
+}
+
 clear_directories() {
     echo "Clearing directories..."
     rm -rf ca certificates output crt
@@ -261,7 +272,9 @@ check_used_certificate_flag=0
 create_apache_virtual_host_flag=0
 clear_flag=0
 generate_certificate_flag=0
+view_certificate_flag=0
 certs_dir=""
+cert_to_view=""
 
 # Check for options
 while [ "$#" -gt 0 ]; do
@@ -303,6 +316,17 @@ while [ "$#" -gt 0 ]; do
         -gcrt|--generate-certificate)
             generate_certificate_flag=1
             shift
+            ;;
+        -v|--view)
+            view_certificate_flag=1
+            shift
+            if [ "$#" -gt 0 ] && [[ ! "$1" =~ ^- ]]; then
+                cert_to_view="$1"
+                shift
+            else
+                echo "Error: Please provide the file path to the certificate for viewing."
+                exit 1
+            fi
             ;;
         --clear)
             clear_flag=1
@@ -350,6 +374,11 @@ fi
 
 if [ "$generate_certificate_flag" -eq 1 ]; then
     generate_certificate "ca/rootCA.pem" "ca/rootCA-key.pem"
+    exit 0
+fi
+
+if [ "$view_certificate_flag" -eq 1 ]; then
+    view_certificate "$cert_to_view"
     exit 0
 fi
 
