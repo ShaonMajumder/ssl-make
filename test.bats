@@ -1,7 +1,7 @@
 #!/usr/bin/env bats
 
 # Load the script
-load "$(pwd)/smcert.sh"
+load "$(pwd)/sslcert.sh"
 
 
 # Mocking function to simulate user input

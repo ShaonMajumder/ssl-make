@@ -1,6 +1,6 @@
-# SmCert - Simplifying Certificate Management
+# SSLCert - Simplifying Certificate Management
 
-SmCert is a bash script that simplifies the management of certificates and certificate authorities (CAs) for your projects. It provides easy-to-use commands to generate CAs, certificates, install mkcert, list certificates, and more.
+SSLCert is a bash script that simplifies the management of certificates and certificate authorities (CAs) for your projects. It provides easy-to-use commands to generate CAs, certificates, install mkcert, list certificates, and more.
 
 ## Table of Contents
 
@@ -30,7 +30,7 @@ SmCert is a bash script that simplifies the management of certificates and certi
 List certificates in a specified directory or the default OpenSSL certificates directory.
 
 ```bash
-./smcert.sh -lc [<directory>]
+./sslcert.sh -lc [<directory>]
 ```
 
 ### Install mkcert
@@ -38,7 +38,7 @@ List certificates in a specified directory or the default OpenSSL certificates d
 Install the mkcert tool to simplify local certificate management.
 
 ```bash
-./smcert.sh -mi
+./sslcert.sh -mi
 ```
 
 ### Uninstall mkcert
@@ -46,7 +46,7 @@ Install the mkcert tool to simplify local certificate management.
 Uninstall the mkcert tool from your system.
 
 ```bash
-./smcert.sh -mu
+./sslcert.sh -mu
 ```
 
 ### Generate CA
@@ -54,7 +54,7 @@ Uninstall the mkcert tool from your system.
 Generate CA files for your projects.
 
 ```bash
-./smcert.sh -gca
+./sslcert.sh -gca
 ```
 
 ### Install CA
@@ -62,7 +62,7 @@ Generate CA files for your projects.
 Install the generated CA files to the system.
 
 ```bash
-./smcert.sh -ica
+./sslcert.sh -ica
 ```
 
 ### Check Used Certificate
@@ -70,7 +70,7 @@ Install the generated CA files to the system.
 Check which certificate is being used by a specified host and port.
 
 ```bash
-./smcert.sh -cuc
+./sslcert.sh -cuc
 ```
 
 ### Create Apache Virtual Host
@@ -78,7 +78,7 @@ Check which certificate is being used by a specified host and port.
 Create an Apache Virtual Host configuration file with SSL.
 
 ```bash
-./smcert.sh -cvh
+./sslcert.sh -cvh
 ```
 
 ### Generate Certificate
@@ -86,7 +86,7 @@ Create an Apache Virtual Host configuration file with SSL.
 Generate a certificate using the generated CA.
 
 ```bash
-./smcert.sh -gcrt
+./sslcert.sh -gcrt
 ```
 
 ### View Certificate
@@ -94,7 +94,7 @@ Generate a certificate using the generated CA.
 View the details of a specific certificate.
 
 ```bash
-./smcert.sh -v <certificate_file>
+./sslcert.sh -v <certificate_file>
 ```
 
 ### Clear Directories
@@ -102,9 +102,10 @@ View the details of a specific certificate.
 Clear all generated directories.
 
 ```bash
-./smcert.sh --clear
+./sslcert.sh --clear
 ```
 
 ## Author
+
 Shaon Majumder
 smazoomder@gmail.com
