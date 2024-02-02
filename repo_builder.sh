@@ -28,8 +28,8 @@ Label: $REPO_LABEL
 Suite: stable
 Version: 1.0
 Codename: stable
-Date: $(LANG=C date -u +"%a, %d %b %Y %T %Z")
-Architectures: amd64
+Date: $(LC_TIME=C date -u "+%a, %d %b %Y %T %z")
+Architectures: amd64 i386
 Components: main
 MD5Sum:
  $(cd "$REPO_DIR" && find . -type f -print | grep -v './dists/' | xargs md5sum | sed -e 's|./|   |' -e 's|  | |' -e 's| |  *./|' -e 's|$| |' | tr '\n' '\n')
@@ -40,22 +40,24 @@ SHA256:
 EOF
 
 # Copy the repository to the web server's document root
+sudo rm -r "$SERVER_ROOT/$REPO_DIR"
 sudo mv $REPO_DIR $SERVER_ROOT
 
-# Create a temporary sources.list entry
-TEMP_SOURCES_LIST_ENTRY="deb [trusted=yes] http://localhost/$REPO_NAME stable main"
+# # Create a temporary sources.list entry
+# # TEMP_SOURCES_LIST_ENTRY="deb [trusted=yes] http://localhost/$REPO_NAME stable main"
+# TEMP_SOURCES_LIST_ENTRY="deb [arch=amd64 trusted=yes] http://localhost/$REPO_NAME stable main"
 
-# Add the temporary repository source to sources.list
-echo "$TEMP_SOURCES_LIST_ENTRY" | sudo tee -a /etc/apt/sources.list
+# # Add the temporary repository source to sources.list
+# echo "$TEMP_SOURCES_LIST_ENTRY" | sudo tee -a /etc/apt/sources.list
 
-# Update apt cache again
-sudo apt-get update
+# # Update apt cache again
+# sudo apt-get update
 
-# Install the sslcert package
-sudo apt-get install sslcert
+# # Install the sslcert package
+# sudo apt-get install sslcert
 
-# Remove the temporary repository source from sources.list
-sudo sed -i "\|$TEMP_SOURCES_LIST_ENTRY|d" /etc/apt/sources.list
+# # Remove the temporary repository source from sources.list
+# sudo sed -i "\|$TEMP_SOURCES_LIST_ENTRY|d" /etc/apt/sources.list
 
-# Update apt cache again
-sudo apt-get update
+# # Update apt cache again
+# sudo apt-get update
