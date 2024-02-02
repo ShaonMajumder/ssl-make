@@ -13,3 +13,5 @@ chmod +x sslcert/usr/local/bin/sslcert.sh
 dpkg-deb --build sslcert
 sudo dpkg -i sslcert.deb
 sslcert.sh
+# sudo dpkg -r sslcert
+# sudo dpkg -P sslcert
