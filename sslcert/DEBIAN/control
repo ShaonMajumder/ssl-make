@@ -1,5 +1,0 @@
-Package: sslcert
-Version: 1.0
-Architecture: all
-Maintainer: Your Name <smazoomder@gmail.com>
-Description: A script to simplify the generation and management of SSL certificates. sslcert is a convenient tool for creating and handling SSL certificates for web servers, ensuring a streamlined process for securing your online applications. It supports easy certificate generation, renewal, and customization, making SSL certificate management hassle-free.
