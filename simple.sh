@@ -49,13 +49,15 @@ mkdir -p $REPO_ROOT/debian
 mv sslcert.deb $REPO_ROOT/debian/
 dpkg-scanpackages $REPO_ROOT/debian /dev/null | gzip -9c > $REPO_ROOT/debian/Packages.gz
 # sudo mv $REPO_ROOT /var/www/html
-sudo rm -r /var/www/html/$REPO_ROOT
-sudo mv $REPO_ROOT /var/www/html
 
-REPO_PATTERN="http://localhost $REPO_ROOT/debian/"
-sudo sed -i "\|$REPO_PATTERN|d" /etc/apt/sources.list
 
-TEMP_SOURCES_LIST_ENTRY="deb [trusted=yes] $REPO_PATTERN"
-echo "$TEMP_SOURCES_LIST_ENTRY" | sudo tee -a /etc/apt/sources.list
-sudo apt-get update
+# sudo rm -r /var/www/html/$REPO_ROOT
+# sudo mv $REPO_ROOT /var/www/html
+
+# REPO_PATTERN="http://localhost $REPO_ROOT/debian/"
+# sudo sed -i "\|$REPO_PATTERN|d" /etc/apt/sources.list
+
+# TEMP_SOURCES_LIST_ENTRY="deb [trusted=yes] $REPO_PATTERN"
+# echo "$TEMP_SOURCES_LIST_ENTRY" | sudo tee -a /etc/apt/sources.list
+# sudo apt-get update
 # sudo apt-get install sslcert
