@@ -349,6 +349,21 @@ while [ "$#" -gt 0 ]; do
     esac
 done
 
+if [ "$list_flag" -eq 0 ] && 
+[ "$mkcert_uninstall_flag" -eq 0 ] && 
+[ "$mkcert_install_flag" -eq 0 ] && 
+[ "$generate_ca_flag" -eq 0 ] && 
+[ "$install_ca_flag" -eq 0 ] && 
+[ "$check_used_certificate_flag" -eq 0 ] && 
+[ "$create_apache_virtual_host_flag" -eq 0 ] && 
+[ "$generate_certificate_flag" -eq 0 ] && 
+[ "$view_certificate_flag" -eq 0 ] && 
+[ "$clear_flag" -eq 0 ]
+then
+    echo "Error: Invalid or unrecognized command."
+    exit 1
+fi
+
 if [ "$list_flag" -eq 1 ]; then
     list_certificates "$certs_dir"
 fi
